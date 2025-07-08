@@ -2,6 +2,9 @@
 
 cd "$(dirname "$0")"
 
+# Install sudo and update man-db
+apt update && apt install -y sudo
+sudo mandb
 SESSION_NAME="musicbot"
 BOT_SCRIPT="bot.py"
 VENV_DIR="venv"
@@ -12,6 +15,7 @@ REQUIREMENTS_FILE="requirements.txt"
 # Creates the virtual environment and installs dependencies if needed.
 setup_environment() {
     echo "--- Checking Environment Setup ---"
+    # Check for and install ffmpeg
     if ! command -v ffmpeg &> /dev/null
     then
         echo "ffmpeg could not be found, attempting to install..."
@@ -22,11 +26,22 @@ setup_environment() {
         fi
     fi
 
+    # Check for and install libopus-dev
     if ! dpkg -s libopus-dev &> /dev/null; then
         echo "libopus-dev could not be found, attempting to install..."
         apt-get update && apt-get install -y libopus-dev
         if [ $? -ne 0 ]; then
             echo "Error: Failed to install libopus-dev. Please install it manually and try again."
+            exit 1
+        fi
+    fi
+
+    # Check for and install screen
+    if ! command -v screen &> /dev/null; then
+        echo "screen could not be found, attempting to install..."
+        apt-get update && apt-get install -y screen
+        if [ $? -ne 0 ]; then
+            echo "Error: Failed to install screen. Please install it manually and try again."
             exit 1
         fi
     fi

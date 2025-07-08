@@ -10,11 +10,13 @@ import torch
 class AIModelManager:
     """
     A class to handle the loading and operation of a local text generation AI model.
+    Includes basic in-memory learning from command inputs.
     """
     def __init__(self):
         self.model = None
         self.tokenizer = None
         self.device = 'cpu'
+        self.learned_info = [] # In-memory storage for learned information
         self.load_model()
 
     def load_model(self):
@@ -54,35 +56,55 @@ class AIModelManager:
     def process_command(self, command_name, *args):
         """
         Processes a command using the loaded text generation model.
-        Crafts prompts based on the command.
+        Crafts prompts based on the command and includes learned information.
+        Stores input from commands for learning.
         """
         if not self.model or not self.tokenizer:
             return "AI model is not loaded."
 
         prompt = ""
         max_length = 150 # Default max length for generated text
+        input_text_to_learn = "" # Store the input text for learning
 
+        # Construct input_text_to_learn based on the command
         if command_name == 'ask':
             question = args[0] if args else ""
             context = args[1] if len(args) > 1 else ""
+            input_text_to_learn = f"Question: {question}"
             if context:
-                 prompt = f"Answer the following question based on the context.\n\nContext: {context}\n\nQuestion: {question}\n\nAnswer:"
-                 max_length = 200 # Allow longer answers with context
-            else:
-                 prompt = f"Answer the following question: {question}\n\nAnswer:"
-                 max_length = 150
+                 input_text_to_learn += f"\nContext: {context}"
+
+            # Include learned info and provided context in the prompt for 'ask'
+            learned_context = "\n".join(self.learned_info)
+            prompt = f"Based on the following information and the context provided, answer the question.\n\nInformation I know:\n{learned_context}\n\nContext: {context}\n\nQuestion: {question}\n\nAnswer:"
+            max_length = 250 # Allow longer answers with context and learned info
 
         elif command_name == 'summarize':
              text = args[0] if args else ""
-             prompt = f"Summarize the following text:\n\n{text}\n\nSummary:"
-             max_length = 100 # Summaries should be concise
+             input_text_to_learn = f"Summarize: {text}"
+             # Include learned info in the prompt for summarization
+             learned_context = "\n".join(self.learned_info)
+             prompt = f"Based on the following information, summarize the text.\n\nInformation I know:\n{learned_context}\n\nText to summarize:\n{text}\n\nSummary:"
+             max_length = 150 # Summaries should be concise, but can be influenced by learned info
 
         elif command_name == 'jokeplease':
-            prompt = "Tell me a short, funny joke:\n\nJoke:"
-            max_length = 80 # Jokes should be short
+            # For jokes, the input is just the command itself, but we can still add it
+            input_text_to_learn = "Command: jokeplease"
+            # Include learned info in the prompt for jokes
+            learned_context = "\n".join(self.learned_info)
+            prompt = f"Based on the following information, tell a short, funny joke.\n\nInformation I know:\n{learned_context}\n\nTell me a short, funny joke:\n\nJoke:"
+            max_length = 100 # Jokes should be short
 
         else:
             return "Unknown AI command."
+
+        # Add the input text to learned info (simple approach)
+        if input_text_to_learn:
+             self.learned_info.append(input_text_to_learn)
+             # Keep the learned_info list from growing too large (optional, but recommended)
+             if len(self.learned_info) > 20: # Limit to last 20 pieces of info
+                 self.learned_info = self.learned_info[-20:]
+
 
         logging.info(f"Generating text for command '{command_name}' with prompt: '{prompt[:100]}...'")
         start_time = time.time()
@@ -132,6 +154,17 @@ class NeuralNetworkCog(commands.Cog):
         self.bot = bot
         self.ai_manager = AIModelManager()
 
+    # Remove the separate learn command as input from all commands is learned
+    # @commands.command(name='learn', help='Teach the AI some information.')
+    # async def learn(self, ctx, *, text: str):
+    #     """Teaches the AI some information."""
+    #     if not text:
+    #         await ctx.send("Please provide some text for the AI to learn.")
+    #         return
+    #
+    #     self.ai_manager.learned_info.append(text)
+    #     await ctx.send("Okay, I've noted that down.")
+
     @commands.command(name='ask', help='Ask the AI a question. Optionally provide context after the question.')
     async def ask(self, ctx, *, args):
         """Asks the AI a question."""
@@ -145,6 +178,7 @@ class NeuralNetworkCog(commands.Cog):
             return
 
         await ctx.send("Thinking...")
+        # Pass question and context to process_command
         response = self.ai_manager.process_command('ask', question, context)
         await ctx.send(response)
 
@@ -156,6 +190,7 @@ class NeuralNetworkCog(commands.Cog):
             return
 
         await ctx.send("Summarizing...")
+        # Pass text to process_command
         response = self.ai_manager.process_command('summarize', text)
         await ctx.send(response)
 
@@ -167,6 +202,7 @@ class NeuralNetworkCog(commands.Cog):
             return
 
         await ctx.send("Attempting to generate a joke...")
+        # Call process_command for jokeplease
         response = self.ai_manager.process_command('jokeplease')
         await ctx.send(response)
 

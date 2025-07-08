@@ -10,7 +10,7 @@ from utils.speeds import preload_dependencies
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,
     format='%(asctime)s:%(levelname)s:%(name)s: %(message)s',
     handlers=[
         logging.FileHandler("bot_activity.log"),
@@ -50,7 +50,7 @@ async def load_extensions():
         'cogs.log_cog',
         'cogs.youtube',
         'cogs.meme',
-        'cogs.music',
+        # 'cogs.music', # Removed to prevent duplicate loading
         'utils.self_healing', # Self-healing is also treated as a cog
     ]
     for extension in cogs_to_load:

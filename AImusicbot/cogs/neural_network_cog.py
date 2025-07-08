@@ -6,17 +6,19 @@ import discord
 from discord.ext import commands
 from transformers import AutoTokenizer, AutoModelForCausalLM # Import only necessary classes
 import torch
+from utils.db_utils import save_learned_data, load_learned_data # Import database functions
 
 class AIModelManager:
     """
     A class to handle the loading and operation of a local text generation AI model.
-    Includes basic in-memory learning from command inputs.
+    Includes persistent learning from command inputs using a database.
     """
     def __init__(self):
         self.model = None
         self.tokenizer = None
         self.device = 'cpu'
-        self.learned_info = [] # In-memory storage for learned information
+        self.learned_info = load_learned_data() # Load learned information from the database
+        logging.info(f"Initialized AIModelManager with {len(self.learned_info)} learned items.")
         self.load_model()
 
     def load_model(self):
@@ -153,17 +155,16 @@ class NeuralNetworkCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.ai_manager = AIModelManager()
+        # Initialize the database when the cog is loaded
+        from utils.db_utils import initialize_db
+        initialize_db()
 
-    # Remove the separate learn command as input from all commands is learned
-    # @commands.command(name='learn', help='Teach the AI some information.')
-    # async def learn(self, ctx, *, text: str):
-    #     """Teaches the AI some information."""
-    #     if not text:
-    #         await ctx.send("Please provide some text for the AI to learn.")
-    #         return
-    #
-    #     self.ai_manager.learned_info.append(text)
-    #     await ctx.send("Okay, I've noted that down.")
+
+    def cog_unload(self):
+        """Saves learned data to the database when the cog is unloaded."""
+        logging.info("Saving learned data before unloading NeuralNetworkCog.")
+        save_learned_data(self.ai_manager.learned_info)
+
 
     @commands.command(name='ask', help='Ask the AI a question. Optionally provide context after the question.')
     async def ask(self, ctx, *, args):

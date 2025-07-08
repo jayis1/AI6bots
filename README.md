@@ -25,7 +25,7 @@ This repository hosts Botz, a powerful and modular Discord bot built with Python
 ## ✨ Features
 
 - ✅ **High-Quality Audio**: Utilizes `yt-dlp` and a lossless PCM codec for the best possible sound quality.
-- ✅ **Self-Contained Installation**: The `launch.sh` script automatically sets up a virtual environment and installs all dependencies.
+- ✅ **Self-Contained Installation**: The `launch.sh` script automatically sets up a virtual environment and installs all dependencies, including system packages like `ffmpeg`, `libopus-dev`, and `sudo`. It also updates the man-db cache.
 - ✅ **Background Operation**: Runs in a `screen` session, ensuring the bot stays online.
 - ✅ **YouTube Integration**: Play audio from YouTube URLs, playlists, and search queries.
 - ✅ **Full Playback Control**: `play`, `pause`, `resume`, `skip`, `stop`, and volume control.
@@ -41,7 +41,7 @@ This repository hosts Botz, a powerful and modular Discord bot built with Python
 
 ## 🎯 Target Environment
 
-This bot is primarily developed and tested on **Debian 12 (Bookworm)**. The `launch.sh` script includes commands to install dependencies like `ffmpeg` using `apt-get`, which is specific to Debian-based distributions.
+This bot is primarily developed and tested on **Debian 12 (Bookworm)**. The `launch.sh` script includes commands to install dependencies like `ffmpeg`, `libopus-dev`, and `sudo` using `apt-get`, which is specific to Debian-based distributions.
 
 It is suitable for deployment in various environments:
 -   **Bare Metal**: A dedicated physical machine running Debian 12.
@@ -50,7 +50,7 @@ It is suitable for deployment in various environments:
 -   **Type 2 Hypervisor**:
     -   **VirtualBox**, **VMware Workstation/Fusion**: Can be run inside a Debian 12 guest VM.
 
-While it may work on other Linux distributions, you might need to manually install the required system dependencies (`ffmpeg`, `libopus-dev`) using your distribution's package manager.
+While it may work on other Linux distributions, you might need to manually install the required system dependencies (`ffmpeg`, `libopus-dev`, `sudo`) using your distribution's package manager.
 
 ---
 
@@ -61,6 +61,7 @@ While it may work on other Linux distributions, you might need to manually insta
 - Python 3.9+
 - `git`
 - `ffmpeg` and `libopus-dev` (The setup script will attempt to install these on Debian-based systems).
+- `sudo` (The launch script will attempt to install this on Debian-based systems).
 
 ### ⚙️ Installation & Setup
 
@@ -98,7 +99,7 @@ While it may work on other Linux distributions, you might need to manually insta
     **Note:** This is not recommended, especially if your code is in a public repository.
 
 4.  **Run the Setup Script**
-    This command prepares the environment, installs all Python packages, and makes the other scripts executable.
+    This command prepares the environment, installs all Python packages, and makes the other scripts executable. It will also attempt to install `sudo` and update the man-db cache.
     ```bash
     ./launch.sh setup
     ```
@@ -115,7 +116,7 @@ The `launch.sh` script is your control center for the bot.
 | `./launch.sh stop`    | Stops the bot and closes the `screen` session.                           |
 | `./launch.sh restart` | Restarts the bot.                                                        |
 | `./launch.sh attach`  | Attaches to the bot's console. To detach without stopping the bot, press `Ctrl+A` then `D`. |
-| `./launch.sh setup`   | Installs dependencies and sets up the environment.                       |
+| `./launch.sh setup`   | Installs dependencies and sets up the environment, including system packages and man-db. |
 
 ---
 
@@ -194,7 +195,7 @@ To play private or members-only YouTube videos, you need to provide the bot with
 -   **`DISCORD_TOKEN`**: Your Discord bot's authentication token. You can get this from the [Discord Developer Portal](https://discord.com/developers/applications) by creating an application and adding a bot.
 -   **`YOUTUBE_API_KEY`**: Your YouTube Data API v3 key. This is required for the `?search` command. You can obtain one from the [Google Cloud Console](https://console.cloud.google.com/apis/library/youtube.googleapis.com).
 -   **`BOT_OWNER_ID`**: Your personal Discord User ID. This is used for owner-only commands. To get your ID, enable Developer Mode in Discord's settings, then right-click your username and select "Copy User ID".
--   **`LOG_CHANNEL_ID`**: The ID of the Discord channel where the bot will send logs. Get this by enabling Developer Mode, right-clicking the channel, and selecting "Copy Channel ID".
+-   **`LOG_CHANNEL_ID`**: The ID of the Discord channel where the bot will send logs. Get this by enabling Developer Mode, right-click the channel, and selecting "Copy Channel ID".
 
 ---
 
@@ -289,5 +290,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 </pre>
 </details>
 </div>
-
-

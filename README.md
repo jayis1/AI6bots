@@ -206,23 +206,27 @@ To play private or members-only YouTube videos, you need to provide the bot with
 ```
 .
 ├── cogs/                     # Contains the command modules (cogs) for the bot
+│   ├── __init__.py           # Initializes the cogs module
 │   ├── admin.py              # Admin commands
-│   ├── ai.py                 # AI-powered commands
 │   ├── cleaner.py            # Automatic cache cleaning task
 │   ├── custom_help.py        # Custom help command
 │   ├── log_cog.py            # Cog for logging
 │   ├── meme.py               # Meme commands
 │   ├── music.py              # Core music commands and playback logic
-│   ├── neural_network_cog.py # Neural network powered commands
+│   ├── neural_network_cog.py # Neural network powered commands (AI commands)
 │   ├── nsfw.py               # NSFW commands
+│   ├── queuebuffer.py        # Handles the music queue buffer
 │   └── youtube.py            # YouTube specific utilities
 ├── utils/                    # Utility scripts and helper functions
+│   ├── __init__.py           # Initializes the utils module
 │   ├── cleaner.py            # Utility for cleaning the audio cache
 │   ├── db_utils.py           # Database utilities for self-healing logs
 │   ├── discord_log_handler.py # Custom log handler for Discord
+│   ├── download_tpu_model.py # Script to download TPU model (kept for reference, but not used in launch.sh)
 │   ├── log_and_cookie_utils.py # Utilities for parsing logs and cookies
 │   ├── model_utils.py        # Utilities for AI model handling (e.g., downloading)
-│   └── self_healing.py       # Self-healing and error handling cog
+│   ├── self_healing.py       # Self-healing and error handling cog
+│   └── speeds.py             # Utilities related to playback speeds
 ├── .env.example              # Example environment file
 ├── bot.py                    # Main bot script
 ├── config.py                 # Bot configuration loader

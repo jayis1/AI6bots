@@ -17,6 +17,9 @@ class AIModelManager:
         self.model = None
         self.tokenizer = None
         self.device = 'cpu'
+        # Initialize the database before loading learned data
+        from utils.db_utils import initialize_db
+        initialize_db()
         self.learned_info = load_learned_data() # Load learned information from the database
         logging.info(f"Initialized AIModelManager with {len(self.learned_info)} learned items.")
         self.load_model()

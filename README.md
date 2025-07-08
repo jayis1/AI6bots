@@ -32,7 +32,7 @@ This repository hosts Botz, a powerful and modular Discord bot built with Python
 - ✅ **Interactive UI**: Uses Discord UI components (buttons) for playback control.
 - ✅ **Advanced Queue Management**: `add`, `remove`, `clear`, `shuffle`, and `view queue`.
 - ✅ **Playback Speed Control**: Adjust playback speed with `speedhigher` and `speedlower`.
-- ✅ **AI-Powered**: Features AI commands for asking questions, summarizing text, and getting jokes, powered by a local text generation model (defaulting to GPT-2). The AI now learns from the input of all AI commands during the current session.
+- ✅ **AI-Powered**: Features AI commands for asking questions, summarizing text, and getting jokes, powered by a local text generation model (defaulting to GPT-2). The AI now learns from the input of all AI commands, with learned information persisted across sessions using a local database.
 - ✅ **Self-Healing**: The bot can detect issues like high latency or disconnections and attempt to recover. It also provides AI-powered summaries of errors.
 - ✅ **Automatic Cache Cleaning**: A background task runs periodically to clean the audio cache and prevent it from growing too large.
 - ✅ **Admin Commands**: `shutdown`, `restart`, `view_files`, and `fetch_and_set_cookies` for bot maintenance.
@@ -242,7 +242,7 @@ To play private or members-only YouTube videos, you need to provide the bot with
 
 -   **Neural Network Cog**: The neural network functionality has been moved into a dedicated cog (`cogs/neural_network_cog.py`) for better modularity and organization.
 -   **Code Refactoring**: The codebase has been significantly refactored to improve modularity and remove redundant code. Unused files have been deleted, and related functionalities have been consolidated.
--   **AI Learning and Model Refactoring**: The AI functionality has been refactored to use a single local text generation model (defaulting to GPT-2) for all AI commands (`ask`, `summarize`, `jokeplease`). The AI now learns from the input of these commands during the current session. The previous specialized models, the attempted Google Coral integration, and the separate `?learn` command have been removed.
+-   **AI Learning Persistence and Model Refactoring**: The AI functionality has been refactored to use a single local text generation model (defaulting to GPT-2) for all AI commands (`ask`, `summarize`, `jokeplease`). The AI now learns from the input of these commands, with learned information persisted across sessions using the `utils/db_utils.py` database. The previous specialized models, the attempted Google Coral integration, and the separate `?learn` command have been removed.
 -   **Enhanced Self-Healing**: The `SelfHealing` cog has been improved to avoid conflicts with other cogs and now provides AI-powered summaries for all command errors.
 -   **Streamlined Utilities**: Redundant log parsing functions have been removed, and the `cookie_parser.py` utility has been renamed and improved.
 -   **Automatic Cache Cleaning**: The cache cleaning logic is now an automatic background task managed by its own cog, using a separate utility function.

@@ -119,6 +119,11 @@ The `launch.sh` script is your control center for the bot.
 
 ---
 
+For debugging purposes, if the bot crashes when started via `launch.sh`, you can try running it directly within the virtual environment to see detailed error messages:
+```bash
+./venv/bin/python bot.py
+```
+
 ## 🎵 Commands
 
 The default command prefix is `?`.

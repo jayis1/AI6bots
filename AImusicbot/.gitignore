@@ -1,0 +1,16 @@
+# Environment variables
+.env
+
+# Log files
+*.log
+
+# Database files
+*.db
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Cache directories
+audio_cache/
+yt_dlp_cache/

@@ -48,9 +48,8 @@ async def load_extensions():
         'cogs.cleaner',
         'cogs.neural_network_cog', # Load the new AI cog
         'cogs.log_cog',
-        'cogs.youtube',
         'cogs.meme',
-        # 'cogs.music', # Removed to prevent duplicate loading
+        'cogs.music',
         'utils.self_healing', # Self-healing is also treated as a cog
     ]
     for extension in cogs_to_load:

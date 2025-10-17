@@ -7,9 +7,6 @@ transformers
 torch
 numba
 numpy
-tflite_runtime
-pycoral
-transformers
 huggingface-hub
 requests
 llama-cpp-python[cuda] # Or llama-cpp-python if no CUDA

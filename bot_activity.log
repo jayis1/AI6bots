@@ -1,0 +1,34 @@
+2025-10-17 07:15:54,884:DEBUG:discord.client: on_ready has successfully been registered as an event
+2025-10-17 07:15:54,885:DEBUG:asyncio: Using selector: EpollSelector
+2025-10-17 07:15:54,886:INFO:root: Pre-loading dependencies...
+2025-10-17 07:15:55,171:INFO:root: Dependencies pre-loaded successfully.
+2025-10-17 07:15:55,172:INFO:root: Checked and ensured cache directories exist.
+2025-10-17 07:15:55,174:INFO:root: Successfully loaded extension: cogs.admin
+2025-10-17 07:15:55,175:INFO:root: Successfully loaded extension: cogs.queuebuffer
+2025-10-17 07:15:55,176:INFO:root: Successfully loaded extension: cogs.nsfw
+2025-10-17 07:15:55,178:INFO:root: Successfully loaded extension: cogs.cleaner
+2025-10-17 07:16:04,566:INFO:root: Database initialized successfully, including learned_data table.
+2025-10-17 07:16:04,568:INFO:root: Loaded 0 learned data items from the database.
+2025-10-17 07:16:04,568:INFO:root: Initialized AIModelManager with 0 learned items.
+2025-10-17 07:16:04,568:INFO:root: Attempting to load text generation AI model...
+2025-10-17 07:16:04,571:DEBUG:urllib3.connectionpool: Starting new HTTPS connection (1): huggingface.co:443
+2025-10-17 07:16:04,760:DEBUG:urllib3.connectionpool: https://huggingface.co:443 "HEAD /gpt2/resolve/main/tokenizer_config.json HTTP/1.1" 200 0
+2025-10-17 07:16:04,852:DEBUG:urllib3.connectionpool: https://huggingface.co:443 "GET /api/models/gpt2/tree/main/additional_chat_templates?recursive=False&expand=False HTTP/1.1" 307 133
+2025-10-17 07:16:04,907:DEBUG:urllib3.connectionpool: https://huggingface.co:443 "GET /api/models/openai-community/gpt2/tree/main/additional_chat_templates?recursive=False&expand=False HTTP/1.1" 404 64
+2025-10-17 07:16:05,906:DEBUG:urllib3.connectionpool: https://huggingface.co:443 "HEAD /gpt2/resolve/main/config.json HTTP/1.1" 200 0
+2025-10-17 07:16:06,342:DEBUG:urllib3.connectionpool: https://huggingface.co:443 "HEAD /gpt2/resolve/main/generation_config.json HTTP/1.1" 200 0
+2025-10-17 07:16:06,395:DEBUG:urllib3.connectionpool: https://huggingface.co:443 "HEAD /gpt2/resolve/main/custom_generate/generate.py HTTP/1.1" 404 0
+2025-10-17 07:16:06,398:INFO:root: Successfully loaded text generation model 'gpt2' on CPU.
+2025-10-17 07:16:06,398:INFO:root: Finished loading model. Model loaded: gpt2
+2025-10-17 07:16:06,399:INFO:root: Database initialized successfully, including learned_data table.
+2025-10-17 07:16:06,399:INFO:root: Successfully loaded extension: cogs.neural_network_cog
+2025-10-17 07:16:06,400:INFO:root: Successfully loaded extension: cogs.log_cog
+2025-10-17 07:16:06,401:INFO:root: Successfully loaded extension: cogs.meme
+2025-10-17 07:16:06,407:INFO:root: Successfully loaded extension: cogs.music
+2025-10-17 07:16:06,408:INFO:root: Database initialized successfully, including learned_data table.
+2025-10-17 07:16:06,409:INFO:root: Successfully loaded extension: utils.self_healing
+2025-10-17 07:16:06,409:INFO:discord.client: logging in using static token
+2025-10-17 07:16:06,557:DEBUG:discord.http: GET https://discord.com/api/v10/users/@me with None has returned 401
+2025-10-17 07:16:06,558:ERROR:root: Error: Invalid Discord Token. Please check your DISCORD_TOKEN in config.py.
+2025-10-17 07:16:06,565:INFO:root: Saving learned data before unloading NeuralNetworkCog.
+2025-10-17 07:16:06,570:INFO:root: Saved 0 learned data items to the database.

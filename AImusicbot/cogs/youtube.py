@@ -94,9 +94,3 @@ class YTDLSource(discord.PCMVolumeTransformer):
             return {'data': data, 'stream': stream}
 
 
-async def setup(bot):
-    try:
-        from .music import Music # Import Music cog here to avoid circular dependency
-        await bot.add_cog(Music(bot))
-    except Exception as e:
-        logging.error(f"Failed to load music cog: {e}", exc_info=True)
